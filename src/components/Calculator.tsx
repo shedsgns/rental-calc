@@ -1,10 +1,9 @@
 import { useState } from "react";
-import type { DateRange } from "react-day-picker";
 import { NumberInput } from "./NumberInput";
 import { CurrencySelect } from "./CurrencySelect";
 import { DayToggle } from "./DayToggle";
 import { ModeToggle, type DurationMode } from "./ModeToggle";
-import { DateRangePicker } from "./DateRangePicker";
+import { DateRangePicker, type DateRange } from "./DateRangePicker";
 import { ResultDisplay } from "./ResultDisplay";
 import {
   calculateTotal,
