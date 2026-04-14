@@ -1,10 +1,32 @@
+export function effectiveDays(
+  days: number,
+  includeFirstDay: boolean,
+  includeLastDay: boolean,
+): number {
+  let result = days;
+  if (!includeFirstDay) result -= 1;
+  if (!includeLastDay) result -= 1;
+  return Math.max(result, 0);
+}
+
 export function calculateTotal(
   pricePerDay: number,
   days: number,
+  includeFirstDay: boolean,
   includeLastDay: boolean,
 ): number {
-  const effectiveDays = includeLastDay ? days : Math.max(days - 1, 0);
-  return pricePerDay * effectiveDays;
+  return pricePerDay * effectiveDays(days, includeFirstDay, includeLastDay);
+}
+
+/**
+ * Inclusive day count between two dates (ignoring time).
+ * daysBetween(Jan 1, Jan 1) = 1, daysBetween(Jan 1, Jan 7) = 7.
+ */
+export function daysBetween(start: Date, end: Date): number {
+  const startUTC = Date.UTC(start.getFullYear(), start.getMonth(), start.getDate());
+  const endUTC = Date.UTC(end.getFullYear(), end.getMonth(), end.getDate());
+  const diff = Math.round((endUTC - startUTC) / (1000 * 60 * 60 * 24));
+  return Math.max(diff + 1, 0);
 }
 
 export function convertAmount(amount: number, rate: number): number {

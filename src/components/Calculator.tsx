@@ -1,24 +1,41 @@
 import { useState } from "react";
+import type { DateRange } from "react-day-picker";
 import { NumberInput } from "./NumberInput";
 import { CurrencySelect } from "./CurrencySelect";
 import { DayToggle } from "./DayToggle";
+import { ModeToggle, type DurationMode } from "./ModeToggle";
+import { DateRangePicker } from "./DateRangePicker";
 import { ResultDisplay } from "./ResultDisplay";
-import { calculateTotal, convertAmount, roundDownNice } from "../lib/calculate";
+import {
+  calculateTotal,
+  convertAmount,
+  daysBetween,
+  roundDownNice,
+} from "../lib/calculate";
 import { useExchangeRates } from "../hooks/useExchangeRates";
 import type { CurrencyCode } from "../lib/currencies";
 
 export function Calculator() {
   const [pricePerDay, setPricePerDay] = useState("");
   const [days, setDays] = useState("");
+  const [dateRange, setDateRange] = useState<DateRange | undefined>();
+  const [mode, setMode] = useState<DurationMode>("days");
   const [baseCurrency, setBaseCurrency] = useState<CurrencyCode>("USD");
   const [convertCurrency, setConvertCurrency] = useState<CurrencyCode>("AMD");
+  const [includeFirstDay, setIncludeFirstDay] = useState(true);
   const [includeLastDay, setIncludeLastDay] = useState(true);
 
   const { rates, loading, error } = useExchangeRates(baseCurrency);
 
   const priceNum = parseFloat(pricePerDay) || 0;
-  const daysNum = parseInt(days) || 0;
-  const total = calculateTotal(priceNum, daysNum, includeLastDay);
+  const daysNum =
+    mode === "days"
+      ? parseInt(days) || 0
+      : dateRange?.from && dateRange?.to
+        ? daysBetween(dateRange.from, dateRange.to)
+        : 0;
+
+  const total = calculateTotal(priceNum, daysNum, includeFirstDay, includeLastDay);
 
   const rate = rates[convertCurrency] ?? null;
   const convertedAmount =
@@ -48,13 +65,30 @@ export function Calculator() {
           />
         </div>
 
-        <NumberInput
-          label="Number of days"
-          value={days}
-          onChange={setDays}
-        />
+        <ModeToggle mode={mode} onChange={setMode} />
 
-        <DayToggle includeLastDay={includeLastDay} onChange={setIncludeLastDay} />
+        {mode === "days" ? (
+          <NumberInput
+            label="Number of days"
+            value={days}
+            onChange={setDays}
+          />
+        ) : (
+          <DateRangePicker range={dateRange} onChange={setDateRange} />
+        )}
+
+        <div className="flex flex-col gap-3">
+          <DayToggle
+            label="Include first day"
+            value={includeFirstDay}
+            onChange={setIncludeFirstDay}
+          />
+          <DayToggle
+            label="Include last day"
+            value={includeLastDay}
+            onChange={setIncludeLastDay}
+          />
+        </div>
 
         <CurrencySelect
           label="Convert to"
