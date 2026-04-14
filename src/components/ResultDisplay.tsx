@@ -46,7 +46,7 @@ export function ResultDisplay({
           ) : convertedAmount !== null ? (
             <>
               <span className="text-lg font-semibold text-neutral-700 dark:text-neutral-300 tabular-nums">
-                {formatCurrency(convertedAmount, convertCurrency)}
+                {formatCurrency(convertedAmount, convertCurrency, 0)}
               </span>
               {rate !== null && (
                 <span className="text-[11px] font-medium text-neutral-400 dark:text-neutral-500 tabular-nums">

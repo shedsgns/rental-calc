@@ -14,12 +14,16 @@ export function getFractionDigits(code: CurrencyCode): number {
   return code === "AMD" ? 0 : 2;
 }
 
-export function formatCurrency(amount: number, code: CurrencyCode): string {
-  const decimals = getFractionDigits(code);
+export function formatCurrency(
+  amount: number,
+  code: CurrencyCode,
+  decimals?: number,
+): string {
+  const fractionDigits = decimals ?? getFractionDigits(code);
   return new Intl.NumberFormat(CURRENCIES[code].locale, {
     style: "currency",
     currency: code,
-    minimumFractionDigits: decimals,
-    maximumFractionDigits: decimals,
+    minimumFractionDigits: fractionDigits,
+    maximumFractionDigits: fractionDigits,
   }).format(amount);
 }

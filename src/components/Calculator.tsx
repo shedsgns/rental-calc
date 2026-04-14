@@ -3,9 +3,9 @@ import { NumberInput } from "./NumberInput";
 import { CurrencySelect } from "./CurrencySelect";
 import { DayToggle } from "./DayToggle";
 import { ResultDisplay } from "./ResultDisplay";
-import { calculateTotal, convertAmount, floorToDecimals } from "../lib/calculate";
+import { calculateTotal, convertAmount, roundDownNice } from "../lib/calculate";
 import { useExchangeRates } from "../hooks/useExchangeRates";
-import { getFractionDigits, type CurrencyCode } from "../lib/currencies";
+import type { CurrencyCode } from "../lib/currencies";
 
 export function Calculator() {
   const [pricePerDay, setPricePerDay] = useState("");
@@ -22,9 +22,7 @@ export function Calculator() {
 
   const rate = rates[convertCurrency] ?? null;
   const convertedAmount =
-    rate !== null
-      ? floorToDecimals(convertAmount(total, rate), getFractionDigits(convertCurrency))
-      : null;
+    rate !== null ? roundDownNice(convertAmount(total, rate)) : null;
 
   return (
     <div className="w-full max-w-md flex flex-col gap-5">
