@@ -190,35 +190,45 @@ export function DateRangePicker({ range, onChange }: DateRangePickerProps) {
     }
   }
 
+  const nativeInputClass =
+    "w-full h-11 px-3 text-[15px] font-medium text-neutral-900 dark:text-neutral-100 bg-neutral-100/60 dark:bg-white/5 rounded-[12px] outline-none appearance-none [&::-webkit-calendar-picker-indicator]:opacity-50 [&::-webkit-calendar-picker-indicator]:cursor-pointer dark:[&::-webkit-calendar-picker-indicator]:invert";
+
   return (
     <div className="flex flex-col gap-2">
-      <label className="text-[11px] font-medium uppercase tracking-wider text-neutral-400 dark:text-neutral-500">
-        Dates
-      </label>
-
-      {/* Mobile: native date inputs */}
-      <div className="md:hidden grid grid-cols-2 gap-2">
-        <input
-          type="date"
-          value={toInputDate(range?.from)}
-          onChange={(e) =>
-            onChange({ from: fromInputDate(e.target.value), to: range?.to })
-          }
-          className="w-full h-10 px-3 text-sm font-medium text-neutral-900 dark:text-neutral-100 bg-neutral-100/60 dark:bg-white/5 rounded-[10px] outline-none"
-          aria-label="From date"
-        />
-        <input
-          type="date"
-          value={toInputDate(range?.to)}
-          onChange={(e) =>
-            onChange({ from: range?.from, to: fromInputDate(e.target.value) })
-          }
-          className="w-full h-10 px-3 text-sm font-medium text-neutral-900 dark:text-neutral-100 bg-neutral-100/60 dark:bg-white/5 rounded-[10px] outline-none"
-          aria-label="To date"
-        />
+      {/* Mobile: two labeled native date inputs */}
+      <div className="md:hidden grid grid-cols-2 gap-3">
+        <div className="flex flex-col gap-2">
+          <label className="text-[11px] font-medium uppercase tracking-wider text-neutral-400 dark:text-neutral-500">
+            From
+          </label>
+          <input
+            type="date"
+            value={toInputDate(range?.from)}
+            onChange={(e) =>
+              onChange({ from: fromInputDate(e.target.value), to: range?.to })
+            }
+            className={nativeInputClass}
+          />
+        </div>
+        <div className="flex flex-col gap-2">
+          <label className="text-[11px] font-medium uppercase tracking-wider text-neutral-400 dark:text-neutral-500">
+            To
+          </label>
+          <input
+            type="date"
+            value={toInputDate(range?.to)}
+            onChange={(e) =>
+              onChange({ from: range?.from, to: fromInputDate(e.target.value) })
+            }
+            className={nativeInputClass}
+          />
+        </div>
       </div>
 
       {/* Desktop: custom two-month calendar popover */}
+      <label className="hidden md:block text-[11px] font-medium uppercase tracking-wider text-neutral-400 dark:text-neutral-500">
+        Dates
+      </label>
       <div ref={containerRef} className="hidden md:block relative">
         <button
           type="button"
