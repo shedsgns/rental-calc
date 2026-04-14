@@ -191,7 +191,7 @@ export function DateRangePicker({ range, onChange }: DateRangePickerProps) {
   }
 
   const nativeInputClass =
-    "w-full h-11 px-3 text-[15px] font-medium text-neutral-900 dark:text-neutral-100 bg-neutral-100/60 dark:bg-white/5 rounded-[12px] outline-none appearance-none [&::-webkit-calendar-picker-indicator]:opacity-50 [&::-webkit-calendar-picker-indicator]:cursor-pointer dark:[&::-webkit-calendar-picker-indicator]:invert";
+    "w-full h-10 px-3 text-sm font-medium text-neutral-900 dark:text-neutral-100 bg-neutral-100/60 dark:bg-white/5 rounded-[10px] outline-none appearance-none transition-colors duration-150 focus:bg-neutral-100 dark:focus:bg-white/10 [&::-webkit-calendar-picker-indicator]:opacity-50 [&::-webkit-calendar-picker-indicator]:cursor-pointer dark:[&::-webkit-calendar-picker-indicator]:invert";
 
   return (
     <div className="flex flex-col gap-2">
