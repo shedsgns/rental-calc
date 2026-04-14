@@ -10,8 +10,12 @@ export type CurrencyCode = keyof typeof CURRENCIES;
 
 export const CURRENCY_CODES = Object.keys(CURRENCIES) as CurrencyCode[];
 
+export function getFractionDigits(code: CurrencyCode): number {
+  return code === "AMD" ? 0 : 2;
+}
+
 export function formatCurrency(amount: number, code: CurrencyCode): string {
-  const decimals = code === "AMD" ? 0 : 2;
+  const decimals = getFractionDigits(code);
   return new Intl.NumberFormat(CURRENCIES[code].locale, {
     style: "currency",
     currency: code,
