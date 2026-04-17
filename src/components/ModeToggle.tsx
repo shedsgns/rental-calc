@@ -11,12 +11,12 @@ export function ModeToggle({ mode, onChange }: ModeToggleProps) {
       <span className="text-[11px] font-medium uppercase tracking-wider text-neutral-400 dark:text-neutral-500">
         Duration
       </span>
-      <div className="relative grid grid-cols-2 h-10 p-0.5 rounded-[10px] bg-neutral-100/60 dark:bg-white/5">
+      <div className="relative grid grid-cols-2 h-10 p-1 rounded-xl bg-neutral-100/60 dark:bg-white/5">
         <div
-          className={`absolute top-0.5 bottom-0.5 w-[calc(50%-2px)] rounded-[8px] bg-white dark:bg-white/10 shadow-sm ${
-            mode === "dates" ? "translate-x-full" : "translate-x-0"
+          className={`absolute top-1 bottom-1 w-[calc(50%-4px)] rounded-[10px] bg-white dark:bg-white/10 shadow-sm ${
+            mode === "dates" ? "translate-x-[calc(100%+4px)]" : "translate-x-0"
           }`}
-          style={{ transition: "transform 150ms ease-out" }}
+          style={{ transition: "transform 150ms ease-out", left: "4px" }}
         />
         <button
           type="button"

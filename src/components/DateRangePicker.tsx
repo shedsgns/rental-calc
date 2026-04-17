@@ -116,31 +116,31 @@ function MonthGrid({ monthDate, range, today, onDayClick }: MonthGridProps) {
           else if (isTo && !isSingleDay) stripClass = "left-0 right-1/2";
 
           const textColor = isSelected
-            ? "text-white"
+            ? "text-white dark:text-neutral-900"
             : isPast
               ? "text-neutral-300 dark:text-neutral-700"
               : "text-neutral-900 dark:text-neutral-100";
 
           const bgClass = isSelected
-            ? "bg-gradient-to-r from-pink-500 to-rose-400 shadow-sm"
+            ? "bg-neutral-900 dark:bg-white"
             : "hover:bg-neutral-100 dark:hover:bg-white/10";
 
           return (
             <div key={i} className="relative aspect-square p-0.5">
               {stripClass && (
                 <div
-                  className={`absolute inset-y-0.5 ${stripClass} bg-pink-100 dark:bg-pink-500/15`}
+                  className={`absolute inset-y-0.5 ${stripClass} bg-neutral-100 dark:bg-white/5`}
                 />
               )}
               <button
                 type="button"
                 onClick={() => onDayClick(day)}
-                className={`relative z-10 w-full h-full flex items-center justify-center text-[14px] font-medium rounded-[10px] cursor-pointer transition-colors ${bgClass} ${textColor}`}
+                className={`relative z-10 w-full h-full flex items-center justify-center text-[14px] font-medium rounded-full cursor-pointer transition-colors ${bgClass} ${textColor}`}
               >
                 <span className="relative">
                   {day.getDate()}
                   {isToday && !isSelected && (
-                    <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-pink-500" />
+                    <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-neutral-900 dark:bg-white" />
                   )}
                 </span>
               </button>
